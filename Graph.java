@@ -4,7 +4,7 @@ public class Graph {
 
     int N; // Num vertices
 
-    LinkedList<Integer> adj [];
+    LinkedList<Edge> adj [];
 
     public Graph(int N){
         this.N = N;
@@ -14,10 +14,10 @@ public class Graph {
         }
     }
 
-    public void addEdge(int v, int u){
+    public void addEdge(int v, int u, int weight){
         if(!hasEdge(v, u)) {
-            adj[v].add(u);
-            adj[u].add(v);
+            adj[v].add(new Edge(v,u, weight));
+            adj[u].add(new Edge(u,v, weight));
         }
     }
 
@@ -25,7 +25,7 @@ public class Graph {
         return adj[v].contains(u);
     }
 
-    public Iterable<Integer> neighbours(int v){
+    public Iterable<Edge> neighbours(int v){
         return adj[v];
     }
 
@@ -34,8 +34,8 @@ public class Graph {
 
         for (int i = 0; i < adj.length; i++) {
             sb.append(i + ": ");
-            for (int j: adj[i]) {
-                sb.append( j + ", ");
+            for (Edge j: adj[i]) {
+                sb.append( j.to() + ", ");
             }
             sb.append("\n");
         }
@@ -49,15 +49,15 @@ public class Graph {
 
         System.out.println(g);
 
-        g.addEdge(0, 1);
-        g.addEdge(4, 0);
-        g.addEdge(2,5);
-        g.addEdge(4,5);
+        g.addEdge(0, 1, 3);
+        g.addEdge(4, 0, 6);
+        g.addEdge(2,5, 7);
+        g.addEdge(4,5, 4);
 
         System.out.println(g);
 
-        for (int i : g.neighbours(5)) {
-            System.out.print(i + ", ");
+        for (Edge i : g.neighbours(5)) {
+            System.out.print(i.to + ", ");
         }
 
         System.out.println();
